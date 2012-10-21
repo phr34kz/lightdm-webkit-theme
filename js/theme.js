@@ -24,7 +24,7 @@ $(document).ready(function() {
 
 	$("#logIn").click( function() {
 		log("Log in button clicked");
-		selectedUser = $("#inputUsername").val() );
+		selectedUser = $("#inputUsername").val();
 		log("user: " + selectedUser);
 		lightdm.start_authentication( selectedUser );
 		submitPassword();
@@ -68,4 +68,5 @@ function log(text) {
 	if(DEBUG) {
 		$("#log").append(text);
 		$("#log").append("<br/>");
+	}
 }

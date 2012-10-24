@@ -36,19 +36,23 @@ $(document).ready(function() {
 
 	}
 
+	log("default_session: " + lightdm.default_session);
+
 });
 
 function submitPassword(){
 	log("submitPassword called");
 
-	lightdm.provide_secret($("#inputPassword").val());
+//	lightdm.provide_secret($("#inputPassword").val());
 }
 
 function authentication_complete() {
-	log("authentication_complete");
+	log("authentication_complete called");
+	log("is_authenticated: " + lightdm.is_authenticated);
+	log("auth_user: " + lightdm.authentication_user);
 	if( lightdm.is_authenticated ) {
 		
-		lightdm.login( lightdm.authentication_user, $("#session").val());
+		lightdm.login( lightdm.authentication_user, lightdm.default_session); 
 
 	}else {
 		//Authentication Failed
@@ -59,6 +63,8 @@ function authentication_complete() {
 
 function show_prompt(text) {
 	log("show_prompt called");
+	log("show_prompt text: " + text);
+	lightdm.provide_secret($("#inputPassword").val())
 }
 
 var DEBUG = true;

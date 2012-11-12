@@ -1,3 +1,5 @@
+var DEBUG = true;
+var selectedUser = null;
 /*
  * Onload startup
  */
@@ -24,11 +26,15 @@ $(document).ready(function() {
 
 	$("#logIn").click( function() {
 		log("Log in button clicked");
-		selectedUser = $("#inputUsername").val();
-		log("user: " + selectedUser);
-		lightdm.start_authentication( selectedUser );
-		submitPassword();
+		logIn();
 	});
+
+	$("#inputPassword").keypress(function(e) {
+		if( e.which == 13 ) {
+			logIn();
+		}
+	});
+
 
 
 	if(DEBUG) {
@@ -40,10 +46,16 @@ $(document).ready(function() {
 
 });
 
+function logIn() {
+	selectedUser = $("#inputUsername").val();
+	log("logging in with user: " + selectedUser);
+	lightdm.start_authentication( selectedUser );
+}
+
 function submitPassword(){
 	log("submitPassword called");
 
-//	lightdm.provide_secret($("#inputPassword").val());
+	lightdm.provide_secret($("#inputPassword").val());
 }
 
 function authentication_complete() {
@@ -64,11 +76,8 @@ function authentication_complete() {
 function show_prompt(text) {
 	log("show_prompt called");
 	log("show_prompt text: " + text);
-	lightdm.provide_secret($("#inputPassword").val())
+	submitPassword()
 }
-
-var DEBUG = true;
-var selectedUser = null;
 
 function log(text) {
 	if(DEBUG) {
